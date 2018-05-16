@@ -1,7 +1,11 @@
+"""
+Auto join the group and print received messages.
+"""
+
 from json import loads
 from linepy import *
 from secret_class import *
-from Class import *
+from colors import *
 
 line = LINE(line_token)
 line_print_to_terminal(line.authToken)

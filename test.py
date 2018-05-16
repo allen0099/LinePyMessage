@@ -1,3 +1,7 @@
+"""
+This file is design for testing receive_message.
+"""
+
 from linepy import *
 from secret_class import *
 

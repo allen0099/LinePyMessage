@@ -1,6 +1,11 @@
+"""
+Only receive messages.
+"""
+
 from json import loads
 
 from linepy import *
+from colors import *
 from secret_class import *
 
 line = LINE(line_token)
