@@ -27,5 +27,12 @@ def telegram_log(text):
     print(COLOR.TELEGRAM + "[%s] [TELEGRAM]" % str(datetime.now()) + COLOR.END + " %s" % text)
 
 
-def line_log(text):
+def line_print_to_terminal(text):
     print(COLOR.LINE + "[%s] [LINE]" % str(datetime.now()) + COLOR.END + " %s" % text)
+
+
+def line_log_to_file(text):
+    f = open('log', 'a')
+    f.write("[%s] [LINE]" % str(datetime.now()) + " %s" % text)
+    f.write('\n')
+    f.close()
