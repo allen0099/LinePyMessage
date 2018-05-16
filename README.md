@@ -1,3 +1,3 @@
 # LinePyMessage
-``pip install linepy``
-Run Recording.py
+## Install
+You can find installation [here](https://github.com/fadhiilrachman/line-py).
