@@ -23,11 +23,6 @@ class COLOR:
     UNDERLINE = '\033[4m'
 
 
-class TELEGRAM:
-    allen0099 = '184805205'
-    group = '-1001173035579'
-
-
 def telegram_log(text):
     print(COLOR.TELEGRAM + "[%s] [TELEGRAM]" % str(datetime.now()) + COLOR.END + " %s" % text)
 
