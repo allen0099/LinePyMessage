@@ -1,6 +1,6 @@
 # Secret Files
 *.crt
-Secret.py 
+secret_class.py
 .idea/
 log*
 

@@ -1,6 +1,6 @@
 from json import loads
 from linepy import *
-from Secret import *
+from secret_class import *
 from Class import *
 
 line = LINE(line_token)

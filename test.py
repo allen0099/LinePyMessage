@@ -1,5 +1,5 @@
 from linepy import *
-from Secret import *
+from secret_class import *
 
 line = LINE(line_token)
 oepoll = OEPoll(line)

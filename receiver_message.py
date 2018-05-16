@@ -1,7 +1,7 @@
 from json import loads
 
 from linepy import *
-from Secret import *
+from secret_class import *
 
 line = LINE(line_token)
 line.log(line.authToken)
