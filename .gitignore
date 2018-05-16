@@ -1,8 +1,8 @@
 # Secret Files
-*.crt
-secret_class.py
-tmp/
 .idea/
+tmp/
+secret_class.py
+*.crt
 log*
 
 # Byte-compiled / optimized / DLL files
