@@ -53,7 +53,7 @@ def action(msg, text, sender_name, msg_id, file_name, group_name):
         elif msg.contentType == 3:
             audio(sender_name, msg_id, file_name, group_name)
         elif msg.contentType == 4:
-            ladder_shuffle()
+            events()
         elif msg.contentType == 6:
             call()
         elif msg.contentType == 7:
@@ -165,7 +165,7 @@ def audio(sender_name, msg_id, file_name, group_name):
         line_print_to_terminal(COLOR.FAIL + "[AUDIO]" + COLOR.END + " ERROR : " + str(e))
 
 
-def ladder_shuffle():
+def events():
     try:
         print('ladder_shuffle')
     except Exception as e:
