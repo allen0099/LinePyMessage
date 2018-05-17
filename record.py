@@ -404,7 +404,16 @@ def accept_group_invitation(operation):  # Type: 16
 
 
 def notified_accept_group_invitation(operation):  # Type: 17
-    print(operation)
+    try:
+        group_id = operation.param1
+        user_id = operation.param2
+        group_name = line.getGroup(group_id).name
+        user_name = line.getContact(user_id).displayName
+        line_print_to_terminal(
+            COLOR.YELLOW + '[%s]' % user_name + COLOR.END +
+            ' accepted to join the group: ' + COLOR.BOLD + '%s' % group_name + COLOR.END)
+    except Exception as e:
+        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_LEAVE_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 def reject_group_invitation(operation):  # Type: 34
@@ -434,7 +443,7 @@ def notified_kickout_from_group(operation):  # Type: 19
         kicker = line.getContact(operation.param2).displayName
         kicked = line.getContact(operation.param3).displayName
         line_print_to_terminal(
-            COLOR.RED + '[%s]' % kicked + COLOR.END + ' in ' + COLOR.CYAN + '[%s]' % group + COLOR.END +
+            COLOR.RED + '[%s]' % kicked + COLOR.END + ' in ' + COLOR.CYAN + '{%s}' % group + COLOR.END +
             ' has been kicked by ' + COLOR.RED + '%s' % kicker)
     except Exception as e:
         line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_KICKOUT_FROM_GROUP]" + COLOR.END + " ERROR : " + str(e))
@@ -614,7 +623,16 @@ def notified_push_noticenter_item(operation):  # Type: 59
 
 
 def notified_join_chat(operation):  # Type: 60
-    print(operation)
+    try:
+        group_id = operation.param1
+        joiner_id = operation.param2
+        group_name = line.getGroup(group_id).name
+        joiner_name = line.getContact(joiner_id).displayName
+        line_print_to_terminal(
+            COLOR.YELLOW + '[%s]' % joiner_name + COLOR.END +
+            ' has joined the group: ' + COLOR.BOLD + '%s' % group_name + COLOR.END)
+    except Exception as e:
+        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_JOIN_CHAT]" + COLOR.END + " ERROR : " + str(e))
 
 
 def notified_leave_chat(operation):  # Type: 61
@@ -623,7 +641,7 @@ def notified_leave_chat(operation):  # Type: 61
         leaver = line.getContact(operation.param2).displayName
         line_print_to_terminal(
             COLOR.YELLOW + '[%s]' % leaver + COLOR.END +
-            ' has leave the group: ' + COLOR.BOLD + '%s' % group + COLOR.END)
+            ' has left the group: ' + COLOR.BOLD + '%s' % group + COLOR.END)
     except Exception as e:
         line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_LEAVE_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
