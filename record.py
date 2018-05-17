@@ -9,7 +9,7 @@ from colors import *
 
 line = LINE(line_token)
 line_print_to_terminal(line.authToken)
-O_E_Poll = OEPoll(line)
+oepoll = OEPoll(line)
 
 
 def receive_message(operation):  # Type: 26
@@ -816,7 +816,7 @@ def notified_update_message(operation):  # Type: 99
     print(operation)
 
 
-O_E_Poll.addOpInterruptWithDict({
+oepoll.addOpInterruptWithDict({
     OpType.END_OF_OPERATION: end_of_operation,
     OpType.UPDATE_PROFILE: update_profile,
     OpType.UPDATE_SETTINGS: update_settings,
@@ -920,4 +920,4 @@ O_E_Poll.addOpInterruptWithDict({
 
 if __name__ == '__main__':
     while True:
-        O_E_Poll.trace()
+        oepoll.trace()
