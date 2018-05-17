@@ -299,17 +299,20 @@ def update_settings(operation):  # Type: 36
 
 
 def notified_update_profile(operation):  # Type: 2
-    name = line.getContact(operation.param1).displayName
-    if operation.param2 == '2':
-        line_print_to_terminal(
-            COLOR.YELLOW + '[%s]' % name + COLOR.END + ' updated name: %s' % name)
-    elif operation.param2 == '16':
-        status = line.getContact(operation.param1).statusMessage
-        line_print_to_terminal(
-            COLOR.YELLOW + '[%s]' % name + COLOR.END + ' updated status: %s' % status)
-    else:
-        print(operation.param2)
-    print(operation.param3)
+    try:
+        name = line.getContact(operation.param1).displayName
+        if operation.param2 == '2':
+            line_print_to_terminal(
+                COLOR.YELLOW + '[%s]' % name + COLOR.END + ' updated name: %s' % name)
+        elif operation.param2 == '16':
+            status = line.getContact(operation.param1).statusMessage
+            line_print_to_terminal(
+                COLOR.YELLOW + '[%s]' % name + COLOR.END + ' updated status: %s' % status)
+        else:
+            print(operation.param2)
+        print(operation.param3)
+    except Exception as e:
+        line_print_to_terminal(COLOR.FAIL + "[UPDATE_PROFILE]" + COLOR.END + " ERROR : " + str(e))
 
 
 # noinspection SpellCheckingInspection
@@ -342,7 +345,21 @@ def create_group(operation):  # Type: 9
 
 
 def update_group(operation):  # Type: 10
-    print(operation)
+    try:
+        group_name = line.getGroup(operation.param1).name
+        if operation.param2 == '1':
+            line_print_to_terminal(
+                COLOR.YELLOW + '{%s}' % group_name + COLOR.END + ' updated group name')
+        elif operation.param2 == '2':
+            line_print_to_terminal(
+                COLOR.YELLOW + '{%s}' % group_name + COLOR.END + ' updated group photo')
+        elif operation.param2 == '4':
+            line_print_to_terminal(
+                COLOR.YELLOW + '{%s}' % group_name + COLOR.END + ' updated invite by link or qr code')
+        else:
+            print(operation)
+    except Exception as e:
+        line_print_to_terminal(COLOR.FAIL + "[UPDATE_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 def notified_update_group(operation):  # Type: 11
