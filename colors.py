@@ -5,7 +5,7 @@ class COLOR:
     BLACK = '\033[30m'
     RED = '\033[31m'
     LINE = '\033[32m'
-    YELLOW = '\033[33m'
+    NOTIFIED = '\033[33m'
     TELEGRAM = '\033[34m'
     MAGENTA = '\033[35m'
     CYAN = '\033[36m'
@@ -27,7 +27,7 @@ def telegram_log(text):
     print(COLOR.TELEGRAM + "[%s] [TELEGRAM]" % str(datetime.now()) + COLOR.END + " %s" % text)
 
 
-def line_print_to_terminal(text):
+def line_print(text):
     print(COLOR.LINE + "[%s] [LINE]" % str(datetime.now()) + COLOR.END + " %s" % text)
 
 

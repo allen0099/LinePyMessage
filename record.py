@@ -8,7 +8,7 @@ from secret_class import *
 from colors import *
 
 line = LINE(line_token)
-line_print_to_terminal(line.authToken)
+line_print(line.authToken)
 oepoll = OEPoll(line)
 
 
@@ -39,7 +39,7 @@ def receive_message(operation):  # Type: 26
             else:
                 action(msg, text, sender_name, msg_id, file_name, group_name)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[RECEIVE_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[RECEIVE_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
 
 
 def action(msg, text, sender_name, msg_id, file_name, group_name):
@@ -69,32 +69,32 @@ def action(msg, text, sender_name, msg_id, file_name, group_name):
         elif msg.contentType == 18:
             delete_photo_in_album(msg, sender_name, group_name)
         else:
-            line_print_to_terminal("[UNKNOWN_CONTENT_TYPE]")
+            line_print("[UNKNOWN_CONTENT_TYPE]")
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[ACTION]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[ACTION]" + COLOR.END + " ERROR : " + str(e))
 
 
 def context(msg, text, sender_name, group_name):
     try:
         if msg.location is not None:
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                 ' sent a location: %s' % str(msg.location))
             line_log_to_file(
                 '[%s] ' % sender_name + '-> %s' % group_name +
                 ' sent a location: %s' % str(msg.location))
         elif msg.relatedMessageId is not None:
-            line_print_to_terminal(COLOR.FAIL + '[HANDLE_MESSAGE_ERROR]: %s' % msg + COLOR.END)
+            line_print(COLOR.FAIL + '[HANDLE_MESSAGE_ERROR]: %s' % msg + COLOR.END)
             line_log_to_file('[HANDLE_MESSAGE_ERROR]: %s' % msg)
         else:
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                 ' %s' % text)
             line_log_to_file(
                 '[%s] ' % sender_name + '-> %s' % group_name +
                 ' %s' % text)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[CONTEXT]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[CONTEXT]" + COLOR.END + " ERROR : " + str(e))
 
 
 def photo(msg, sender_name, msg_id, file_name, group_name):
@@ -103,7 +103,7 @@ def photo(msg, sender_name, msg_id, file_name, group_name):
             extension = loads(msg.contentMetadata['MEDIA_CONTENT_INFO'])['extension']
             if extension == 'png':
                 line.downloadObjectMsg(msg_id, saveAs=save_path + file_name + '.png')
-                line_print_to_terminal(
+                line_print(
                     COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                     ' sent a PNG: %s' % file_name + '.png')
                 line_log_to_file(
@@ -111,7 +111,7 @@ def photo(msg, sender_name, msg_id, file_name, group_name):
                     ' sent a PNG: %s' % file_name + '.png')
             elif extension == 'JPEG':
                 line.downloadObjectMsg(msg_id, saveAs=save_path + file_name + '.jpg')
-                line_print_to_terminal(
+                line_print(
                     COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                     ' sent a JPEG: %s' % file_name + '.jpg')
                 line_log_to_file(
@@ -119,7 +119,7 @@ def photo(msg, sender_name, msg_id, file_name, group_name):
                     ' sent a JPEG: %s' % file_name + '.jpg')
             elif extension == 'gif':
                 line.downloadObjectMsg(msg_id, saveAs=save_path + file_name + '.gif')
-                line_print_to_terminal(
+                line_print(
                     COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                     ' sent a GIF: %s' % file_name + '.gif')
                 line_log_to_file(
@@ -129,54 +129,54 @@ def photo(msg, sender_name, msg_id, file_name, group_name):
                 print(msg)
         else:
             line.downloadObjectMsg(msg_id, saveAs=save_path + file_name + '.jpg')
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                 ' sent a picture: %s' % file_name + '.jpg')
             line_log_to_file(
                 '[%s] ' % sender_name + '-> %s' % group_name +
                 ' sent a picture: %s' % file_name + '.jpg')
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[PHOTO]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[PHOTO]" + COLOR.END + " ERROR : " + str(e))
 
 
 def video(sender_name, msg_id, file_name, group_name):
     try:
         line.downloadObjectMsg(msg_id, saveAs=save_path + file_name + '.mp4')
-        line_print_to_terminal(
+        line_print(
             COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
             ' sent a video: %s' % file_name)
         line_log_to_file(
             '[%s] ' % sender_name + '-> %s' % group_name +
             ' sent a video: %s' % file_name)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[VIDEO]" + COLOR.END + " ERROR : " + str(e) + "\nMessage ID is: " + msg_id)
+        line_print(COLOR.FAIL + "[VIDEO]" + COLOR.END + " ERROR : " + str(e) + "\nMessage ID is: " + msg_id)
 
 
 def audio(sender_name, msg_id, file_name, group_name):
     try:
         line.downloadObjectMsg(msg_id, saveAs=save_path + file_name + '.mp4')
-        line_print_to_terminal(
+        line_print(
             COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
             ' sent an audio message: %s' % file_name + '.mp4')
         line_log_to_file(
             '[%s] ' % sender_name + '-> %s' % group_name +
             ' sent an audio message: %s' % file_name + '.mp4')
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[AUDIO]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[AUDIO]" + COLOR.END + " ERROR : " + str(e))
 
 
 def events():
     try:
         print('ladder_shuffle')
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[LADDER_SHUFFLE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[LADDER_SHUFFLE]" + COLOR.END + " ERROR : " + str(e))
 
 
 def call():
     try:
         print('call')
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[CALL]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[CALL]" + COLOR.END + " ERROR : " + str(e))
 
 
 # noinspection SpellCheckingInspection
@@ -185,48 +185,48 @@ def sticker(msg, sender_name, group_name):
         txt = 'send a sticker\n' + \
               '  Sticker Package ID: %s\n' % str(msg.contentMetadata['STKPKGID']) + \
               '  Sticker ID: %s' % str(msg.contentMetadata['STKID'])
-        line_print_to_terminal(
+        line_print(
             COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
             ' %s' % txt)
         line_log_to_file(
             '[%s] ' % sender_name + '-> %s' % group_name +
             ' %s' % txt)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[STICKER]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[STICKER]" + COLOR.END + " ERROR : " + str(e))
 
 
 def event():
     try:
         print('event')
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[EVENT]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[EVENT]" + COLOR.END + " ERROR : " + str(e))
 
 
 def contact(msg, sender_name, group_name):
     try:
         contact_id = msg.contentMetadata['mid']
-        line_print_to_terminal(
+        line_print(
             COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
             ' sent contact: %s' % contact_id)
         line_log_to_file(
             '[%s] ' % sender_name + '-> %s' % group_name +
             ' sent contact: %s' % contact_id)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[CONTACT]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[CONTACT]" + COLOR.END + " ERROR : " + str(e))
 
 
 def file(msg, sender_name, msg_id, group_name):
     try:
         file_name = str(msg.contentMetadata['FILE_NAME'])
         line.downloadObjectMsg(msg_id, saveAs=save_path + file_name)
-        line_print_to_terminal(
+        line_print(
             COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
             ' sent a file: %s' % file_name)
         line_log_to_file(
             '[%s] ' % sender_name + '-> %s' % group_name +
             ' sent a file: %s' % file_name)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[FILE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[FILE]" + COLOR.END + " ERROR : " + str(e))
 
 
 # noinspection SpellCheckingInspection
@@ -234,14 +234,14 @@ def notification(msg, sender_name, group_name):
     try:
         lockey = msg.contentMetadata['locKey']
         if lockey == 'BN':
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '@ %s' % group_name + COLOR.END +
                 ' sent a note.')
             line_log_to_file(
                 '[%s] ' % sender_name + '@ %s' % group_name +
                 ' sent a note.')
         elif lockey == 'BA':
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '@ %s' % group_name + COLOR.END +
                 ' created an album: %s, photos: (%s+1)' % (
                     msg.contentMetadata['albumName'], msg.contentMetadata['mediaCount']))
@@ -250,7 +250,7 @@ def notification(msg, sender_name, group_name):
                 ' created an album: %s, photos: (%s+1)' % (
                     msg.contentMetadata['albumName'], msg.contentMetadata['mediaCount']))
         elif lockey == 'BT':
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '@ %s' % group_name + COLOR.END +
                 ' add photos (%s+1) in an album: %s' % (
                     msg.contentMetadata['mediaCount'], msg.contentMetadata['albumName']))
@@ -261,7 +261,7 @@ def notification(msg, sender_name, group_name):
         else:
             print(msg)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFICATION]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFICATION]" + COLOR.END + " ERROR : " + str(e))
 
 
 def delete_photo_in_album(msg, sender_name, group_name):
@@ -269,21 +269,21 @@ def delete_photo_in_album(msg, sender_name, group_name):
         loc_key = msg.contentMetadata['LOC_KEY']
         album_name = msg.contentMetadata['LOC_ARGS']
         if loc_key == 'BO':
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                 ' delete photo in %s' % album_name)
             line_log_to_file(
                 '[%s] ' % sender_name + '-> %s' % group_name +
                 ' delete photo in %s' % album_name)
         elif loc_key == 'BD':
-            line_print_to_terminal(
+            line_print(
                 COLOR.SENDER + '[%s] ' % sender_name + COLOR.BOLD + '-> %s' % group_name + COLOR.END +
                 ' delete album: %s' % album_name)
             line_log_to_file(
                 '[%s] ' % sender_name + '-> %s' % group_name +
                 ' delete album: %s' % album_name)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[DELETE_PHOTO_IN_ALBUM]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[DELETE_PHOTO_IN_ALBUM]" + COLOR.END + " ERROR : " + str(e))
 
 
 def end_of_operation(operation):  # Type: 0
@@ -302,17 +302,17 @@ def notified_update_profile(operation):  # Type: 2
     try:
         name = line.getContact(operation.param1).displayName
         if operation.param2 == '2':
-            line_print_to_terminal(
-                COLOR.YELLOW + '[%s]' % name + COLOR.END + ' updated name: %s' % name)
+            line_print(
+                COLOR.NOTIFIED + '[%s]' % name + COLOR.END + ' updated name: %s' % name)
         elif operation.param2 == '16':
             status = line.getContact(operation.param1).statusMessage
-            line_print_to_terminal(
-                COLOR.YELLOW + '[%s]' % name + COLOR.END + ' updated status: %s' % status)
+            line_print(
+                COLOR.NOTIFIED + '[%s]' % name + COLOR.END + ' updated status: %s' % status)
         else:
             print(operation.param2)
         print(operation.param3)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[UPDATE_PROFILE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[UPDATE_PROFILE]" + COLOR.END + " ERROR : " + str(e))
 
 
 # noinspection SpellCheckingInspection
@@ -348,18 +348,18 @@ def update_group(operation):  # Type: 10
     try:
         group_name = line.getGroup(operation.param1).name
         if operation.param2 == '1':
-            line_print_to_terminal(
-                COLOR.YELLOW + '{%s}' % group_name + COLOR.END + ' updated group name')
+            line_print(
+                COLOR.NOTIFIED + '{%s}' % group_name + COLOR.END + ' updated group name')
         elif operation.param2 == '2':
-            line_print_to_terminal(
-                COLOR.YELLOW + '{%s}' % group_name + COLOR.END + ' updated group photo')
+            line_print(
+                COLOR.NOTIFIED + '{%s}' % group_name + COLOR.END + ' updated group photo')
         elif operation.param2 == '4':
-            line_print_to_terminal(
-                COLOR.YELLOW + '{%s}' % group_name + COLOR.END + ' updated invite by link or qr code')
+            line_print(
+                COLOR.NOTIFIED + '{%s}' % group_name + COLOR.END + ' updated invite by link or qr code')
         else:
             print(operation)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[UPDATE_GROUP]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[UPDATE_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 def notified_update_group(operation):  # Type: 11
@@ -376,11 +376,11 @@ def notified_invite_into_group(operation):  # Type: 13
         print(operation)
         group_id = operation.param1
         group_name = line.getGroup(group_id).name
-        # Accept group invitation
+        # auto accept join group
         line.acceptGroupInvitation(group_id)
-        line_print_to_terminal(COLOR.WARNING + 'Joined a group: %s' % group_name + COLOR.END)
+        line_print(COLOR.WARNING + 'Joined a group: %s' % group_name + COLOR.END)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_INVITE_INTO_GROUP]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFIED_INVITE_INTO_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 def cancel_invitation_group(operation):  # Type: 31
@@ -409,11 +409,11 @@ def notified_accept_group_invitation(operation):  # Type: 17
         user_id = operation.param2
         group_name = line.getGroup(group_id).name
         user_name = line.getContact(user_id).displayName
-        line_print_to_terminal(
-            COLOR.YELLOW + '[%s]' % user_name + COLOR.END +
+        line_print(
+            COLOR.NOTIFIED + '[%s]' % user_name + COLOR.END +
             ' accepted to join the group: ' + COLOR.BOLD + '%s' % group_name + COLOR.END)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_LEAVE_GROUP]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFIED_LEAVE_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 def reject_group_invitation(operation):  # Type: 34
@@ -429,24 +429,24 @@ def kickout_from_group(operation):  # Type: 18
     try:
         group = line.getGroup(operation.param1).name
         kicked = line.getContact(operation.param2).displayName
-        line_print_to_terminal(
-            COLOR.RED + '[%s]' % kicked + COLOR.END + ' in ' + COLOR.CYAN + '[%s]' % group + COLOR.END +
+        line_print(
+            COLOR.RED + '[%s]' % kicked + COLOR.END + ' in ' + COLOR.BOLD + '{%s}' % group + COLOR.END +
             ' has been kicked by ' + COLOR.RED + 'ME' + COLOR.END)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[KICKOUT_FROM_GROUP]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[KICKOUT_FROM_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 # noinspection SpellCheckingInspection
 def notified_kickout_from_group(operation):  # Type: 19
     try:
-        group = line.getGroup(operation.param1).name
-        kicker = line.getContact(operation.param2).displayName
-        kicked = line.getContact(operation.param3).displayName
-        line_print_to_terminal(
-            COLOR.RED + '[%s]' % kicked + COLOR.END + ' in ' + COLOR.CYAN + '{%s}' % group + COLOR.END +
-            ' has been kicked by ' + COLOR.RED + '%s' % kicker)
+        group_name = line.getGroup(operation.param1).name
+        user_kick_other = line.getContact(operation.param2).displayName
+        user_kicked = line.getContact(operation.param3).displayName
+        line_print(
+            COLOR.RED + '[%s]' % user_kicked + COLOR.END + ' in ' + COLOR.BOLD + '{%s}' % group_name + COLOR.END +
+            ' has been kicked by ' + COLOR.RED + '%s' % user_kick_other)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_KICKOUT_FROM_GROUP]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFIED_KICKOUT_FROM_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
 
 def create_room(operation):  # Type: 20
@@ -496,7 +496,7 @@ def send_message(operation):  # Type: 25
             else:
                 action(msg, text, sender_name, msg_id, file_name, group_name)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[SEND_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[SEND_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
 
 
 def send_message_receipt(operation):  # Type: 27
@@ -602,11 +602,11 @@ def notified_read_message(operation):  # Type: 55
         else:
             print(operation.param1)
         reader = line.getContact(operation.param2).displayName
-        line_print_to_terminal(
+        line_print(
             COLOR.READ + '[%s] ' % reader + COLOR.BOLD + '@{%s}' % name + COLOR.END +
             ' read the message.')
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_READ_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFIED_READ_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
 
 
 def failed_email_confirmation(operation):  # Type: 56
@@ -628,22 +628,22 @@ def notified_join_chat(operation):  # Type: 60
         joiner_id = operation.param2
         group_name = line.getGroup(group_id).name
         joiner_name = line.getContact(joiner_id).displayName
-        line_print_to_terminal(
-            COLOR.YELLOW + '[%s]' % joiner_name + COLOR.END +
+        line_print(
+            COLOR.NOTIFIED + '[%s]' % joiner_name + COLOR.END +
             ' has joined the group: ' + COLOR.BOLD + '%s' % group_name + COLOR.END)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_JOIN_CHAT]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFIED_JOIN_CHAT]" + COLOR.END + " ERROR : " + str(e))
 
 
 def notified_leave_chat(operation):  # Type: 61
     try:
         group = line.getGroup(operation.param1).name
         leaver = line.getContact(operation.param2).displayName
-        line_print_to_terminal(
-            COLOR.YELLOW + '[%s]' % leaver + COLOR.END +
+        line_print(
+            COLOR.NOTIFIED + '[%s]' % leaver + COLOR.END +
             ' has left the group: ' + COLOR.BOLD + '%s' % group + COLOR.END)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[NOTIFIED_LEAVE_GROUP]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[NOTIFIED_LEAVE_CHAT]" + COLOR.END + " ERROR : " + str(e))
 
 
 def notified_typing(operation):  # Type: 62
@@ -664,10 +664,10 @@ def destroy_message(operation):  # Type: 64
         else:
             print(operation.param1)
         msg_id = operation.param2
-        line_print_to_terminal(
+        line_print(
             COLOR.WARNING + '{%s}' % name + COLOR.END + ' unsent the message: %s' % msg_id)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[DESTROY_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[DESTROY_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
 
 
 def notified_destroy_message(operation):  # Type: 65
@@ -680,10 +680,10 @@ def notified_destroy_message(operation):  # Type: 65
         else:
             print(operation.param1)
         msg_id = operation.param2
-        line_print_to_terminal(
+        line_print(
             COLOR.WARNING + '{%s}' % name + COLOR.END + ' unsent the message: %s' % msg_id)
     except Exception as e:
-        line_print_to_terminal(COLOR.FAIL + "[DESTROY_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
+        line_print(COLOR.FAIL + "[DESTROY_MESSAGE]" + COLOR.END + " ERROR : " + str(e))
 
 
 # noinspection SpellCheckingInspection
