@@ -1,5 +1,5 @@
-"""
-Auto join the group and print received messages.
+"""Auto join the group and print received messages.
+It can use for log the messages and store it into logs.
 """
 
 from json import loads
@@ -370,14 +370,15 @@ def notified_invite_into_group(operation):  # Type: 13
     try:
         group_id = operation.param1
         group_name = line.getGroup(group_id).name
-        inviter_id = operation.param2
-        inviter_name = line.getContact(inviter_id).displayName
+        invite_id = operation.param2
+        invite_name = line.getContact(invite_id).displayName
         joiner_id = operation.param3
         joiner_name = line.getContact(joiner_id).displayName
-        # auto accept join group
+        # auto accept join group if someone invite me
         line.acceptGroupInvitation(group_id)
         line_print(
-            COLOR.WARNING + '[%s]' + inviter_name + ' invite [%s]' % joiner_name + ' join a group: %s' % group_name + COLOR.END)
+            COLOR.WARNING + '[%s]' + invite_name + ' invite [%s]' % joiner_name +
+            ' join a group: %s' % group_name + COLOR.END)
     except Exception as e:
         line_print(COLOR.FAIL + "[NOTIFIED_INVITE_INTO_GROUP]" + COLOR.END + " ERROR : " + str(e))
 

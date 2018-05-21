@@ -23,7 +23,7 @@ class COLOR:
     UNDERLINE = '\033[4m'
 
 
-def telegram_log(text):
+def telegram_print(text):
     print(COLOR.TELEGRAM + "[%s] [TELEGRAM]" % str(datetime.now()) + COLOR.END + " %s" % text)
 
 
