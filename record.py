@@ -368,13 +368,16 @@ def invite_into_group(operation):  # Type: 12
 
 def notified_invite_into_group(operation):  # Type: 13
     try:
-        # TODO: 這個應該是邀請而不是加入群組
-        print(operation)
         group_id = operation.param1
         group_name = line.getGroup(group_id).name
+        inviter_id = operation.param2
+        inviter_name = line.getContact(inviter_id).displayName
+        joiner_id = operation.param3
+        joiner_name = line.getContact(joiner_id).displayName
         # auto accept join group
         line.acceptGroupInvitation(group_id)
-        line_print(COLOR.WARNING + 'Joined a group: %s' % group_name + COLOR.END)
+        line_print(
+            COLOR.WARNING + '[%s]' + inviter_name + ' invite [%s]' % joiner_name + ' join a group: %s' % group_name + COLOR.END)
     except Exception as e:
         line_print(COLOR.FAIL + "[NOTIFIED_INVITE_INTO_GROUP]" + COLOR.END + " ERROR : " + str(e))
 
