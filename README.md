@@ -7,3 +7,4 @@ save_path = "~/Downloads/"
 line_token = "abc"
 ```
 ## About
+LinePy is now banned from official Line server, use it at your own risk.
